@@ -1,0 +1,27 @@
+NIBSS FRAUD ANALYSIS REPORT
+================================================================================
+Generated on: 2025-07-13 23:05:41
+
+EXECUTIVE SUMMARY
+----------------------------------------
+Total Transactions Analyzed: 1,000,000
+Fraudulent Transactions: 3,000
+Overall Fraud Rate: 0.3000%
+Total Fraud Loss: ₦1,154,876,055.34
+Average Fraud Amount: ₦384,958.69
+Median Fraud Amount: ₦182,012.17
+
+HIGH-RISK PATTERNS IDENTIFIED
+----------------------------------------
+Highest Average Loss Channel: IB (₦1,594,087.37)
+Most Frequent Fraud Channel: Mobile (1496.0 cases)
+Peak Fraud Month: May (394 cases)
+Peak Fraud Hour: 11:00 (299 cases)
+
+RECOMMENDATIONS
+----------------------------------------
+1. Enhance monitoring for high-value transactions, especially in channels with highest average losses
+2. Implement additional verification steps during peak fraud hours and months
+3. Focus fraud prevention efforts on the most frequently targeted channels
+4. Consider dynamic risk scoring based on transaction patterns identified
+5. Increase customer education about fraud prevention, particularly for high-risk channels

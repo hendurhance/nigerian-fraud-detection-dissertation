@@ -1,0 +1,100 @@
+=== ENHANCED DATASET CLEANING ===
+
+Loading dataset...
+Original dataset shape: (1000000, 38)
+Original fraud cases: 3000
+Original fraud rate: 0.0030
+
+==================================================
+STEP 1: BASIC CLEANING
+==================================================
+1.1 Handling missing values...
+   Missing values: 997000 → 0
+1.2 Checking for duplicates...
+   Duplicates removed: 0
+   Shape after duplicate removal: (1000000, 38)
+1.3 Handling invalid amounts...
+   Zero amounts found: 0
+   Negative amounts found: 0
+   Transactions after removing invalid amounts: 1000000
+   Transactions removed: 0
+
+==================================================
+STEP 2: OUTLIER ANALYSIS
+==================================================
+
+2.1 Analyzing outliers in 'amount'...
+   Basic Statistics for amount:
+   Count: 1,000,000
+   Mean: ₦156,951.42
+   Std: ₦326,359.00
+   Min: ₦168.55
+   Q1 (25%): ₦28,000.42
+   Median (50%): ₦66,679.98
+   Q3 (75%): ₦159,528.92
+   Max: ₦17,926,807.69
+
+   IQR Analysis:
+   IQR = Q3 - Q1 = ₦131,528.50
+   Standard bounds (1.5 × IQR): [₦-169,292.34, ₦356,821.67]
+   Extreme bounds (3.0 × IQR): [₦-366,585.09, ₦554,114.43]
+
+   Outlier Detection Results:
+   Standard outliers (1.5 × IQR): 98,592 (9.86%)
+   Extreme outliers (3.0 × IQR): 52,533 (5.25%)
+
+==================================================
+STEP 3: OUTLIER REMOVAL DECISION
+==================================================
+3.1 Investigating extreme outliers (Q3 + 3 × IQR)...
+   Found 52,533 extreme outliers
+   Outlier amount range: ₦554,123.52 - ₦17,926,807.69
+   Fraud cases among outliers: 519
+   Fraud rate among outliers: 0.0099
+
+   DECISION: RETAINING extreme outliers
+   Rationale: Following document methodology - extreme values likely represent
+   legitimate high-value transactions (corporate banking, real estate, international trade)
+
+==================================================
+STEP 4: FINAL DATASET STATISTICS
+==================================================
+4.1 Processing Summary:
+   Original transactions: 1,000,000
+   After duplicate removal: 1,000,000
+   After removing zero/negative amounts: 1,000,000
+   After outlier analysis: 1,000,000
+   Total transactions removed: 0
+
+4.2 Fraud Statistics:
+   Original fraud cases: 3,000
+   Final fraud cases: 3,000
+   Original fraud rate: 0.0030
+   Final fraud rate: 0.0030
+
+4.3 Amount Statistics:
+   Min amount: ₦168.55
+   Max amount: ₦17,926,807.69
+   Mean amount: ₦156,951.42
+   Median amount: ₦66,679.98
+
+4.4 Final Validation:
+   Missing values: 0
+   Duplicates: 0
+   Zero/negative amounts: 0
+   Final dataset shape: (1000000, 38)
+
+✓ Enhanced cleaned dataset saved to: nibss_fraud_dataset_cleaned.csv
+
+4.5 Creating outlier visualizations...
+   Visualization saved as: outlier_analysis_visualization.png
+
+============================================================
+✅ ENHANCED CLEANING COMPLETED!
+============================================================
+Summary:
+• Original transactions: 1,000,000
+• Final transactions: 1,000,000
+• Fraud rate maintained: 0.0030
+• High-value outliers retained for authenticity
+============================================================

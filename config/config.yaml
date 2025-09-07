@@ -1,0 +1,76 @@
+# NIBSS Fraud Detection System Configuration
+
+# Dataset Generation
+dataset:
+  default_size: 600000
+  seed: 42
+  fraud_rate: 0.003  # 0.3% fraud rate as per NIBSS 2023 data
+  
+# Model Configuration
+models:
+  random_seed: 42
+  test_size: 0.2
+  validation_size: 0.2
+  
+  # Cross-validation
+  cv_folds: 5
+  cv_scoring: "roc_auc"
+  
+  # Hyperparameter optimization
+  optimization:
+    n_iter: 100  # for RandomizedSearchCV
+    n_jobs: -1
+    verbose: 1
+
+# Feature Engineering
+features:
+  # Behavioral features
+  behavioral:
+    time_windows:
+      short_term: 24  # hours
+      medium_term: 168  # hours (1 week)
+      long_term: 720   # hours (30 days)
+  
+  # Categorical encoding
+  categorical:
+    low_cardinality_threshold: 10
+    high_cardinality_method: "target"
+  
+  # Numerical scaling
+  numerical:
+    method: "standard"  # standard, minmax, robust
+
+# Cost Analysis (Nigerian Naira)
+costs:
+  false_positive:
+    customer_friction: 250
+    manual_review: 1500
+    opportunity_cost_rate: 0.001  # % of transaction amount
+  
+  false_negative:
+    average_fraud_amount: 384959
+    investigation_cost: 5000
+    regulatory_fine: 50000
+    reputation_cost: 25000
+
+# Evaluation Metrics
+evaluation:
+  primary_metric: "roc_auc"
+  threshold_optimization: "f1"  # f1, precision, recall, cost
+  confidence_interval: 0.95
+  bootstrap_iterations: 1000
+
+# Visualization
+visualization:
+  figure_size: [12, 8]
+  dpi: 300
+  style: "whitegrid"
+  palette: "Set2"
+  
+# Paths
+paths:
+  data_dir: "data"
+  models_dir: "models"
+  results_dir: "results"
+  docs_dir: "docs"
+  notebooks_dir: "notebooks"

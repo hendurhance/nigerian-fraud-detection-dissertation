@@ -1,0 +1,64 @@
+Starting Channel-Specific Fraud Analysis...
+============================================================
+Loading dataset...
+Dataset shape: (1000000, 38)
+Overall fraud rate: 0.3000%
+Channels found: ['ATM', 'ECOM', 'IB', 'Mobile', 'POS', 'Web']
+
+Calculating channel-specific fraud statistics...
+  Mobile      : 0.333% fraud rate (1,496/449,522 transactions)
+  Web         : 0.343% fraud rate (687/200,488 transactions)
+  POS         : 0.306% fraud rate (551/180,035 transactions)
+  IB          : 0.169% fraud rate (168/99,653 transactions)
+  ECOM        : 0.151% fraud rate (76/50,227 transactions)
+  ATM         : 0.110% fraud rate (22/20,075 transactions)
+
+Performing chi-square analysis...
+Chi-square test results:
+  χ² = 147.59
+  df = 5
+  p-value = 4.36e-30
+  Cramér's V = 0.012
+  Interpretation: highly significant (p < 0.001)
+
+NIGERIAN BANKING CHANNEL FRAUD RATES:
+==================================================
+1. Web: 0.34% fraud rate (95% CI [0.32%, 0.37%])
+2. Mobile: 0.33% fraud rate (95% CI [0.32%, 0.35%])
+3. POS: 0.31% fraud rate (95% CI [0.28%, 0.33%])
+4. IB: 0.17% fraud rate (95% CI [0.14%, 0.19%])
+5. ECOM: 0.15% fraud rate (95% CI [0.12%, 0.19%])
+6. ATM: 0.11% fraud rate (95% CI [0.06%, 0.16%])
+
+High-risk channels: Web, Mobile, POS
+Low-risk channels: IB, ECOM, ATM
+
+Creating channel fraud visualizations...
+✓ Channel fraud analysis visualization saved as: channel_fraud_analysis.png
+
+======================================================================
+CHANNEL-SPECIFIC FRAUD ANALYSIS SUMMARY
+======================================================================
+
+Statistical Association Test:
+Chi-square: χ²(5) = 147.59, p < 0.001
+Cramér's V: 0.012 (effect size)
+Result: highly significant (p < 0.001)
+
+Channel Vulnerability Ranking (High to Low Risk):
+1. Web         : 0.343% [0.32%-0.37%] (HIGH RISK)
+2. Mobile      : 0.333% [0.32%-0.35%] (HIGH RISK)
+3. POS         : 0.306% [0.28%-0.33%] (HIGH RISK)
+4. IB          : 0.169% [0.14%-0.19%] (LOW RISK)
+5. ECOM        : 0.151% [0.12%-0.19%] (LOW RISK)
+6. ATM         : 0.110% [0.06%-0.16%] (LOW RISK)
+
+Key Insights:
+• Highest risk channel: Web (0.343%)
+• Lowest risk channel: ATM (0.110%)
+• Digital channels avg fraud rate: 0.276%
+• Traditional channels avg fraud rate: 0.208%
+• Digital vs Traditional risk ratio: 1.3x higher
+
+✅ CHANNEL FRAUD ANALYSIS COMPLETED!
+============================================================

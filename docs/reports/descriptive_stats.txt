@@ -1,0 +1,65 @@
+Starting Descriptive Statistics Analysis...
+============================================================
+Loading dataset...
+Dataset shape: (1000000, 38)
+Fraud rate: 0.3000%
+Analyzing 5 key variables:
+  - Amount (amount)
+  - Velocity Score (velocity_score)
+  - Amount Deviation Ratio (amount_vs_mean_ratio)
+  - Transaction Count 24h (tx_count_24h)
+  - Merchant Risk Score (merchant_risk_score)
+
+Testing normality (Shapiro-Wilk test)...
+  Amount: p = 3.65e-83 (Non-normal)
+  Velocity Score: p = 6.79e-82 (Non-normal)
+  Amount Deviation Ratio: p = 9.48e-81 (Non-normal)
+  Transaction Count 24h: p = 2.90e-77 (Non-normal)
+  Merchant Risk Score: p = 7.19e-52 (Non-normal)
+
+Calculating descriptive statistics...
+Legitimate transactions: 997,000
+Fraudulent transactions: 3,000
+  Amount: Cohen's d = 0.388 (small)
+  Velocity Score: Cohen's d = -0.037 (negligible)
+  Amount Deviation Ratio: Cohen's d = -0.046 (negligible)
+  Transaction Count 24h: Cohen's d = -0.021 (negligible)
+  Merchant Risk Score: Cohen's d = -0.012 (negligible)
+
+Creating descriptive statistics table...
+
+DESCRIPTIVE STATISTICS TABLE:
+========================================================================================================================
+Variable                  Legitimate Transactions                            Fraudulent Transactions                           
+                          Mean ± SD       Median [IQR]         Mean ± SD       Median [IQR]         Statistical Test
+------------------------------------------------------------------------------------------------------------------------
+Amount                    156265 ± 323879     66472 [27936, 158931]     384959 ± 768444     182012 [87042, 386884]     U = 8.07e+08, p < 0.001
+Velocity Score            2 ± 4     1 [0, 2]     2 ± 4     1 [0, 2]     U = 1.52e+09, p < 0.001
+Amount Deviation Ratio    1 ± 2     0 [0, 1]     1 ± 2     0 [0, 1]     U = 1.51e+09, p < 0.001
+Transaction Count 24h     1 ± 1     1 [1, 1]     1 ± 1     1 [1, 1]     U = 1.51e+09, p < 0.001
+Merchant Risk Score       0 ± 0     0 [0, 1]     0 ± 0     0 [0, 1]     U = 1.51e+09, p < 0.001
+
+EFFECT SIZE ANALYSIS:
+============================================================
+Rank  Variable                  Cohens d   Effect     % Diff    
+------------------------------------------------------------
+1     Amount                    0.388     small      +146.3%
+2     Amount Deviation Ratio    -0.046     negligible -8.1%
+3     Velocity Score            -0.037     negligible -7.3%
+4     Transaction Count 24h     -0.021     negligible -0.8%
+5     Merchant Risk Score       -0.012     negligible -0.7%
+
+KEY INSIGHTS:
+----------------------------------------
+1. Amount: d = 0.39 (small effect, +146.3% difference)
+   → Limited discriminatory power suggests fraud favors reasonable amounts
+2. Amount Deviation Ratio: d = -0.05 (negligible effect, -8.1% difference)
+   → Fraudulent transactions deviate dramatically from users' historical spending patterns
+3. Velocity Score: d = -0.04 (negligible effect, -7.3% difference)
+   → Elevated velocity patterns suggest coordinated transaction sequences
+
+Generating LaTeX table...
+✓ LaTeX table saved to: descriptive_stats_table.tex
+
+✅ DESCRIPTIVE STATISTICS ANALYSIS COMPLETED!
+============================================================

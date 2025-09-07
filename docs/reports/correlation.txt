@@ -1,0 +1,226 @@
+tarting Feature Correlation and Multicollinearity Analysis...
+================================================================================
+Loading and preparing dataset...
+Dataset shape: (1000000, 38)
+Columns: ['transaction_id', 'customer_id', 'timestamp', 'amount', 'channel', 'merchant_category', 'bank', 'location', 'age_group', 'hour', 'day_of_week', 'month', 'is_weekend', 'is_peak_hour', 'tx_count_24h', 'amount_sum_24h', 'amount_mean_7d', 'amount_std_7d', 'tx_count_total', 'amount_mean_total', 'amount_std_total', 'channel_diversity', 'location_diversity', 'amount_vs_mean_ratio', 'online_channel_ratio', 'is_fraud', 'fraud_technique', 'hour_sin', 'hour_cos', 'day_sin', 'day_cos', 'month_sin', 'month_cos', 'amount_log', 'amount_rounded', 'velocity_score', 'merchant_risk_score', 'composite_risk']
+
+Preparing ALL features for analysis...
+Encoding categorical features: ['channel', 'merchant_category', 'bank', 'location', 'age_group']
+  - Encoded channel: 6 unique values
+  - Encoded merchant_category: 14 unique values
+  - Encoded bank: 10 unique values
+  - Encoded location: 6 unique values
+  - Encoded age_group: 4 unique values
+
+Feature preparation complete:
+  - Total features for analysis: 31
+  - Numeric features: 26
+  - Encoded categorical features: 5
+  - Including fraud target for correlation matrix: 32 total columns
+
+All features included:
+   1. amount
+   2. hour
+   3. day_of_week
+   4. month
+   5. tx_count_24h
+   6. amount_sum_24h
+   7. amount_mean_7d
+   8. amount_std_7d
+   9. tx_count_total
+  10. amount_mean_total
+  11. amount_std_total
+  12. channel_diversity
+  13. location_diversity
+  14. amount_vs_mean_ratio
+  15. online_channel_ratio
+  16. hour_sin
+  17. hour_cos
+  18. day_sin
+  19. day_cos
+  20. month_sin
+  21. month_cos
+  22. amount_log
+  23. amount_rounded
+  24. velocity_score
+  25. merchant_risk_score
+  26. composite_risk
+  27. channel_encoded
+  28. merchant_category_encoded
+  29. bank_encoded
+  30. location_encoded
+  31. age_group_encoded
+
+Calculating correlations with fraud status for 31 features...
+  Processing feature 10/31: amount_mean_total
+  Processing feature 20/31: month_sin
+  Processing feature 30/31: location_encoded
+
+================================================================================
+CORRELATION ANALYSIS RESULTS
+================================================================================
+
+Correlation Strength Distribution:
+  negligible  :  31 features
+
+Top 15 correlations with fraud status:
+Rank Feature                        Correlation  Abs Corr   Strength     P-value
+--------------------------------------------------------------------------------
+  1. amount_log                       0.0445     0.0445   negligible   0.00e+00
+  2. amount                           0.0383     0.0383   negligible   1.44e-321
+  3. month                           -0.0112     0.0112   negligible   5.49e-29
+  4. channel_encoded                  0.0090     0.0090   negligible   1.49e-19
+  5. month_cos                       -0.0065     0.0065   negligible   8.86e-11
+  6. month_sin                        0.0032     0.0032   negligible   1.50e-03
+  7. amount_mean_7d                  -0.0025     0.0025   negligible   1.32e-02
+  8. amount_std_7d                   -0.0025     0.0025   negligible   1.40e-02
+  9. amount_vs_mean_ratio            -0.0024     0.0024   negligible   1.71e-02
+ 10. composite_risk                  -0.0019     0.0019   negligible   5.23e-02
+ 11. velocity_score                  -0.0019     0.0019   negligible   5.25e-02
+ 12. amount_sum_24h                  -0.0019     0.0019   negligible   5.70e-02
+ 13. day_cos                          0.0018     0.0018   negligible   6.52e-02
+ 14. day_sin                         -0.0017     0.0017   negligible   9.25e-02
+ 15. day_of_week                      0.0016     0.0016   negligible   1.06e-01
+
+Calculating full correlation matrix for all 32 features...
+Full correlation matrix shape: (32, 32)
+Found 10 highly correlated feature pairs (|r| > 0.7)
+Top 10 highly correlated pairs:
+   1. amount                    <-> amount_vs_mean_ratio     : r =  0.962
+   2. amount                    <-> amount_sum_24h           : r =  0.859
+   3. amount_sum_24h            <-> velocity_score           : r =  0.857
+   4. amount_sum_24h            <-> amount_vs_mean_ratio     : r =  0.840
+   5. amount_mean_total         <-> amount_std_total         : r =  0.834
+   6. merchant_risk_score       <-> composite_risk           : r =  0.821
+   7. hour                      <-> hour_sin                 : r = -0.802
+   8. month                     <-> month_sin                : r = -0.763
+   9. day_of_week               <-> day_sin                  : r = -0.735
+  10. amount_mean_7d            <-> amount_std_7d            : r =  0.720
+
+Calculating Variance Inflation Factors (VIF) for 31 features...
+Removing 1 zero-variance features: ['location_diversity']
+Computing VIF for 30 clean features...
+  Processing VIF 5/30: tx_count_24h
+  Processing VIF 10/30: amount_mean_total
+  Processing VIF 15/30: hour_sin
+  Processing VIF 20/30: month_cos
+  Processing VIF 25/30: composite_risk
+  Processing VIF 30/30: age_group_encoded
+
+VIF Summary:
+  Maximum VIF: 189.83
+  Mean VIF: 40.88
+  Features with VIF ≥ 10: 15
+  Features with VIF ≥ 5: 17
+  Features with VIF ≥ 3: 21
+  Features with VIF < 3: 9
+
+Top 15 features with highest VIF:
+Rank Feature                        VIF        Level
+------------------------------------------------------------
+  1. composite_risk                   189.83  high
+  2. channel_diversity                188.12  high
+  3. online_channel_ratio             161.53  high
+  4. amount_log                       158.30  high
+  5. merchant_risk_score              123.08  high
+  6. tx_count_total                    97.67  high
+  7. amount_mean_total                 82.48  high
+  8. amount_vs_mean_ratio              46.43  high
+  9. amount                            28.97  high
+ 10. amount_sum_24h                    22.52  high
+ 11. hour                              21.25  high
+ 12. amount_std_total                  16.56  high
+ 13. month                             13.61  high
+ 14. velocity_score                    11.29  high
+ 15. tx_count_24h                      11.00  high
+
+Creating correlation and multicollinearity visualizations...
+  Creating correlation matrix heatmap...
+    Visualizing 23 key features in correlation matrix
+  Creating top correlations bar chart...
+  Creating correlation strength distribution...
+  Creating feature importance lollipop chart...
+✓ Correlation analysis visualization saved as: correlation_multicollinearity_analysis.png
+
+Creating VIF visualization...
+✓ VIF analysis visualization saved as: vif_multicollinearity_analysis.png
+
+====================================================================================================
+FEATURE CORRELATION AND MULTICOLLINEARITY SUMMARY
+====================================================================================================
+
+Correlation with Fraud Status Summary:
+------------------------------------------------------------
+Very strong correlations (|r| ≥ 0.7): 0
+Strong correlations (0.5 ≤ |r| < 0.7): 0
+Moderate correlations (0.3 ≤ |r| < 0.5): 0
+Weak correlations (0.1 ≤ |r| < 0.3): 0
+Negligible correlations (|r| < 0.1): 31
+
+Top 10 Features Correlated with Fraud:
+ 1. amount_log                         : r =  0.0445 (negligible  ) p = 0.00e+00
+ 2. amount                             : r =  0.0383 (negligible  ) p = 1.44e-321
+ 3. month                              : r = -0.0112 (negligible  ) p = 5.49e-29
+ 4. channel_encoded                    : r =  0.0090 (negligible  ) p = 1.49e-19
+ 5. month_cos                          : r = -0.0065 (negligible  ) p = 8.86e-11
+ 6. month_sin                          : r =  0.0032 (negligible  ) p = 1.50e-03
+ 7. amount_mean_7d                     : r = -0.0025 (negligible  ) p = 1.32e-02
+ 8. amount_std_7d                      : r = -0.0025 (negligible  ) p = 1.40e-02
+ 9. amount_vs_mean_ratio               : r = -0.0024 (negligible  ) p = 1.71e-02
+10. composite_risk                     : r = -0.0019 (negligible  ) p = 5.23e-02
+
+Behavioral Features Performance:
+  Average |correlation|: 0.0017
+
+Traditional Features Performance:
+  Average |correlation|: 0.0194
+
+Multicollinearity (VIF) Summary:
+--------------------------------------------------
+Maximum VIF: 189.83
+Mean VIF: 40.88
+High multicollinearity (VIF ≥ 10): 15 features
+Moderate multicollinearity (5 ≤ VIF < 10): 2 features
+Elevated multicollinearity (3 ≤ VIF < 5): 4 features
+Acceptable multicollinearity (VIF < 3): 9 features
+
+Features with High Multicollinearity (VIF ≥ 10):
+   1. composite_risk                     : VIF =  189.83
+   2. channel_diversity                  : VIF =  188.12
+   3. online_channel_ratio               : VIF =  161.53
+   4. amount_log                         : VIF =  158.30
+   5. merchant_risk_score                : VIF =  123.08
+   6. tx_count_total                     : VIF =   97.67
+   7. amount_mean_total                  : VIF =   82.48
+   8. amount_vs_mean_ratio               : VIF =   46.43
+   9. amount                             : VIF =   28.97
+  10. amount_sum_24h                     : VIF =   22.52
+
+Features with Moderate Multicollinearity (5 ≤ VIF < 10):
+   1. day_of_week                        : VIF =    9.65
+   2. channel_encoded                    : VIF =    9.15
+
+Key Insights:
+------------------------------
+• Top discriminative features:
+  1. amount_log: 4.4% correlation - fraud increases with higher values
+  2. amount: 3.8% correlation - fraud increases with higher values
+  3. month: 1.1% correlation - fraud decreases with higher values
+• Traditional features show 11.1x stronger correlation than behavioral features
+
+Recommendations:
+-------------------------
+• Consider non-linear methods - limited linear correlations found
+• Ensemble methods may capture complex feature interactions
+• Apply regularization (Ridge/Lasso) to address 15 high-VIF features
+• Consider feature selection to remove redundant variables
+• Amount features dominate top correlations - expand feature engineering in this area
+
+================================================================================
+✅ CORRELATION AND MULTICOLLINEARITY ANALYSIS COMPLETED!
+================================================================================
+Files generated:
+  • correlation_multicollinearity_analysis.png - Correlation analysis (4-panel)
+  • vif_multicollinearity_analysis.png - VIF analysis
+  • Analysis covers 31 features
+  • Correlation matrix includes 32 total columns
