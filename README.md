@@ -164,6 +164,11 @@ nigerian-fraud-detection-dissertation/
 
 ## 📊 Research Dataset Specifications
 
+### 📥 **Dataset Available on Kaggle**
+**🔗 [Download the NIBSS Fraud Dataset](https://www.kaggle.com/datasets/hendurhance/nibsss-fraud-dataset)**
+
+The complete 1,000,000 transaction dataset with comprehensive documentation is freely available on Kaggle for research and educational use.
+
 ### NIBSS 2023 Calibrated Statistics (Ground Truth)
 
 | Metric | Value | Source | Implementation |
