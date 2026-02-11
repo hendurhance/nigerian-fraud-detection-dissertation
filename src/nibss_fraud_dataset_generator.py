@@ -16,16 +16,13 @@ from __future__ import annotations
 import argparse
 import calendar
 import hashlib
-import os
 import random
 import uuid
-from datetime import datetime, timedelta
+from datetime import datetime
 from pathlib import Path
-from textwrap import dedent
 
 import pandas as pd
 import numpy as np
-import yaml
 
 # ──────────────────────────────────────────────────────────────────────────────
 # NIBSS 2023 Calibrated Configuration
@@ -204,6 +201,7 @@ class NIBSSFraudDatasetGenerator:
         
         # Nigerian business hours
         self.peak_hours = [10, 11, 14, 15, 16]
+        self._hourly_weights = self._build_hourly_weights()
     
     def _prepare_distributions(self):
         """Prepare and normalize all probability distributions."""
@@ -293,9 +291,6 @@ class NIBSSFraudDatasetGenerator:
                 "customer_id": f"CUST_{uuid.uuid4().hex[:8].upper()}",
                 "age_group": np.random.choice(self.age_bands, p=self.age_weights),
                 "location": np.random.choice(self.states, p=self.state_weights),
-                "risk_score": np.random.beta(2, 8),
-                "account_age_months": np.random.exponential(24),
-                "avg_monthly_transactions": np.random.lognormal(2.5, 1),
             })
         
         return customers
@@ -307,14 +302,14 @@ class NIBSSFraudDatasetGenerator:
         # Sample month based on transaction volume distribution
         month = np.random.choice(np.arange(1, 13), p=self.monthly_volume_weights)
         day = random.randint(1, calendar.monthrange(year, month)[1])
-        hour = np.random.choice(np.arange(24), p=self._get_hourly_weights())
+        hour = np.random.choice(np.arange(24), p=self._hourly_weights)
         minute = random.randint(0, 59)
         second = random.randint(0, 59)
         
         return datetime(year, month, day, hour, minute, second)
     
-    def _get_hourly_weights(self) -> np.ndarray:
-        """Get hourly transaction weights (Nigerian business hours)."""
+    def _build_hourly_weights(self) -> np.ndarray:
+        """Build hourly transaction weights (Nigerian business hours)."""
         weights = np.ones(24) * 0.02  # Base weight for off-hours
         weights[8:18] = 0.08          # Business hours
         weights[self.peak_hours] = 0.12  # Peak hours
@@ -418,7 +413,6 @@ class NIBSSFraudDatasetGenerator:
         df = df.merge(customer_stats, on="customer_id", how="left")
         
         # Derived ratios
-        df["amount_vs_mean_ratio"] = df["amount"] / (df["amount_mean_total"] + 1)
         df["online_channel_ratio"] = (
             df.groupby("customer_id")["channel"]
             .transform(lambda x: x.isin(["Mobile", "Web", "ECOM"]).mean())
@@ -603,7 +597,8 @@ class NIBSSFraudDatasetGenerator:
         df["month_sin"] = np.sin(2 * np.pi * df["month"] / 12)
         df["month_cos"] = np.cos(2 * np.pi * df["month"] / 12)
         
-        # Amount encodings
+        # Amount-based features (computed after fraud injection so amounts are final)
+        df["amount_vs_mean_ratio"] = df["amount"] / (df["amount_mean_total"] + 1)
         df["amount_log"] = np.log1p(df["amount"])
         df["amount_rounded"] = (df["amount"] % 1000 == 0).astype(int)
         
