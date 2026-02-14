@@ -4,6 +4,24 @@
 
 The NIBSS Fraud Dataset Generator is a sophisticated synthetic data generator specifically calibrated to match the 2023 Nigerian Interbank Settlement System (NIBSS) Annual Fraud Landscape report. This tool generates realistic Nigerian banking transaction data with fraud patterns that mirror real-world statistics from Nigeria's financial ecosystem.
 
+## Fraud Rate Calibration
+
+The dataset uses a fraud rate of 0.30% (3,000 fraudulent transactions per million), which is elevated from the actual NIBSS reported rate of 0.000848%. This elevation is a deliberate design decision for the following reasons:
+
+**Statistical Necessity**: The real-world NIBBS rate (0.000848%) would result in only 8 fraud cases per million transactions, which is insufficient for:
+- Training machine learning models effectively
+- Performing meaningful statistical evaluation
+- Conducting robust cross-validation
+- Calculating reliable performance metrics with confidence intervals
+
+**Maintained Realism**: While elevated, the 0.30% rate:
+- Preserves realistic class imbalance challenges (332:1 ratio)
+- Provides sufficient fraud samples (3,000 cases) for model development
+- Maintains all NIBBS fraud pattern distributions (channel-specific rates, temporal patterns, technique distributions)
+- Keeps the problem representative of real-world fraud detection challenges
+
+This approach is common in fraud detection research to balance statistical validity with practical model training requirements.
+
 ## Algorithm and Methodology
 
 ### Data Generation Strategy
@@ -155,7 +173,7 @@ match = "✓" if abs(actual_pct - target_pct) < 1.0 else "✗"
 
 ### Statistical Validation
 1. **Distribution Matching**: Chi-square tests verify channel and temporal distributions
-2. **Fraud Rate Precision**: Maintains exact 0.3% fraud rate as per NIBSS
+2. **Fraud Rate Precision**: Maintains exact 0.3% fraud rate (elevated from NIBSS 0.000848% to ensure sufficient fraud samples for effective ML model training and statistical evaluation)
 3. **Amount Realism**: Log-normal distributions create realistic transaction amounts
 4. **Seasonal Patterns**: Monthly variations match Nigerian business cycles
 

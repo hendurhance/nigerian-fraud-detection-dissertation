@@ -29,7 +29,7 @@ import numpy as np
 # ──────────────────────────────────────────────────────────────────────────────
 
 NIBSS_CONFIG = {
-    "fraud_rate": 0.003,  # 0.30% overall fraud ratio
+    "fraud_rate": 0.003,  # 0.30% fraud rate (elevated from NIBSS 0.000848% for ML training purposes)
     
     # Monthly transaction volume percentages (NIBSS 2023)
     "monthly_volume_pct": {

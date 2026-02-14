@@ -4,7 +4,7 @@
 dataset:
   default_size: 600000
   seed: 42
-  fraud_rate: 0.003  # 0.3% fraud rate as per NIBSS 2023 data
+  fraud_rate: 0.003  # 0.3% fraud rate (elevated from NIBSS 0.000848% for ML training)
   
 # Model Configuration
 models:

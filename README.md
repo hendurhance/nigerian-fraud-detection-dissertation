@@ -37,7 +37,7 @@ This repository contains the complete implementation of a BSc Statistics dissert
 ### Dataset Development
 - **Scale**: 1,000,000 synthetic Nigerian financial transactions
 - **Calibration Source**: NIBSS 2023 Annual Fraud Landscape data
-- **Fraud Rate**: 0.30% (consistent with NIBSS reported statistics)
+- **Fraud Rate**: 0.30% (elevated from NIBSS reported 0.000848% to ensure sufficient fraud samples for model training)
 - **Feature Engineering**: 38 features across temporal, behavioral, and risk categories
 - **Ethical Compliance**: Synthetic data approach ensuring privacy and regulatory compliance
 
@@ -174,11 +174,23 @@ The complete 1,000,000 transaction dataset with comprehensive documentation is f
 | Metric | Value | Source | Implementation |
 |--------|-------|--------|----------------|
 | **Transaction Volume** | 1,000,000 | Research Scale | Synthetic Generation |
-| **Fraud Rate** | 0.30% (3,000 fraud cases) | NIBSS 2023 | Statistical Calibration |
+| **Fraud Rate** | 0.30% (3,000 fraud cases) | Elevated from NIBSS 0.000848% | Statistical Calibration for ML Training |
 | **Top Fraud Channel** | Mobile (49.75%) | NIBSS 2023 | Channel Distribution |
 | **Peak Fraud Month** | May (12.25%) | NIBSS 2023 | Temporal Modeling |
 | **Average Fraud Loss** | ₦384,959 | NIBSS 2023 | Amount Distribution |
 | **Primary Fraud Technique** | Social Engineering (65.8%) | NIBSS 2023 | Fraud Categorization |
+
+### Fraud Rate Calibration Rationale
+
+The dataset has a fraud rate of 0.30% (3,000 fraudulent transactions), which creates a class imbalance ratio of approximately 332:1. Based on the report from NIBSS, the actual fraud rate is about 0.000848% [NIBSS(2024)].
+
+**Why elevate the fraud rate?**
+The real-world rate would mean that the dataset will only have 8 fraud cases per million transactions, which is not sufficient to train models effectively or perform statistical evaluation. The 0.30% rate keeps the class imbalance problem realistic while providing enough fraud samples for model development. This approach:
+- Maintains realistic class imbalance challenges (332:1 ratio)
+- Provides sufficient fraud samples (3,000 cases) for robust model training
+- Enables meaningful statistical evaluation and performance metrics
+- Preserves all NIBSS fraud pattern distributions (channel, temporal, technique)
+- Allows for effective cross-validation and bootstrap analysis
 
 ### Feature Engineering Framework (38 Features Total)
 
@@ -284,7 +296,7 @@ The complete 1,000,000 transaction dataset with comprehensive documentation is f
 # Research dataset specifications
 dataset:
   size: 1000000                    # 1M transactions for statistical power
-  fraud_rate: 0.003               # 0.30% NIBSS-calibrated rate
+  fraud_rate: 0.003               # 0.30% (elevated from NIBSS 0.000848% for ML training)
   seed: 42                        # Reproducibility seed
   validation_split: 0.2           # 80-20 train-test split
 
